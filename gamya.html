@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gamya  Candles | Luxury Candles</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap');
+        
+        :root {
+            --primary: #ff0978;
+            --secondary: #fffb19;
+            --accent: #959a98;
+            --dark: #000000;
+            --light: #cfcfcf;
+        }
+
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark);
+            background-color: var(--light);
+        }
+
+
+        h1, h2, h3, h4 {
+            font-family: 'serif', serif;
+        }
+        .hero-section {
+            background: linear-gradient(rgba(239, 10, 189, 0.966), rgba(25, 217, 247, 0.3)), url('https://placehold.co/1920x1080') no-repeat center center;
+            background-size: cover;
+            height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .candle-card {
+            transition: all 0.3s ease;
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .candle-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+        }
+        .scent-label {
+            background-color: var(--secondary);
+            color: var(--dark);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-right: 6px;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .add-to-cart {
+            background-color: var(--primary);
+            color: white;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+        .add-to-cart:hover {
+            background-color: #C19A6B;
+            transform: translateY(-2px);
+        }
+
+         .cart-count {
+            background-color: var(--primary);
+            color: white;
+        }
+        .feature-icon {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .divider {
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary);
+            margin: 0 auto 30px;
+        }
+        .testimonial-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Mobile menu */
+        .mobile-nav {
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        /* Toast notification */
+        .toast {
+            animation: slideIn 0.5s forwards, fadeOut 0.5s 2.5s forwards;
+        }
+        @keyframes slideIn {
+            from { right: -100%; opacity: 0; }
+            to { right: 20px; opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+        /* Custom underline for section titles */
+        .section-title {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center">
+                    <a href="#" class="text-2xl font-bold text-gray-900 flex items-center">
+                        <span class="text-primary">GAMYA</span>
+                        <span class="text-gray-700">CANDLES</span>
+                    </a>
+                    <div class="hidden md:ml-10 md:flex md:space-x-8">
+                        <a href="#" class="text-primary border-b-2 border-primary px-1 font-medium">Home</a>
+                        <a href="#shop" class="text-gray-600 hover:text-primary px-1 transition">Shop</a>
+                        <a href="#collections" class="text-gray-600 hover:text-primary px-1 transition">Collections</a>
+                        <a href="#about" class="text-gray-600 hover:text-primary px-1 transition">About</a>
+                        <a href="#contact" class="text-gray-600 hover:text-primary px-1 transition">Contact</a>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-6">
+                    <div class="relative">
+                        <button id="search-btn" class="text-gray-600 hover:text-primary">
+                            <i class="fas fa-search fa-lg"></i>
+                        </button>
+                    </div>
+                    <button type="button" id="cart-btn" class="relative text-gray-600 hover:text-primary">
+                        <i class="fas fa-shopping-bag fa-lg"></i>
+                        <span class="cart-count absolute -top-2 -right-2 h-5 w-5 rounded-full flex items-center justify-center text-xs font-bold" id="cart-counter">0</span>
+                    </button>
+                </div>
+                <div class="md:hidden">
+                    <button type="button" id="mobile-menu-btn" class="text-gray-600 hover:text-primary focus:outline-none">
+                        <i class="fas fa-bars fa-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div class="hidden mobile-nav md:hidden absolute w-full bg-white shadow-lg z-50" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#" class="block px-3 py-2 text-base font-medium text-primary bg-primary/10 rounded-md">Home</a>
+                <a href="#shop" class="block px-3 py-2 text-base font-medium text-gray-600 hover:text-primary hover:bg-primary/10 rounded-md">Shop</a>
+                <a href="#collections" class="block px-3 py-2 text-base font-medium text-gray-600 hover:text-primary hover:bg-primary/10 rounded-md">Collections</a>
+                <a href="#about" class="block px-3 py-2 text-base font-medium text-gray-600 hover:text-primary hover:bg-primary/10 rounded-md">About</a>
+                <a href="#contact" class="block px-3 py-2 text-base font-medium text-gray-600 hover:text-primary hover:bg-primary/10 rounded-md">Contact</a>
+            </div>
+            <div class="pt-4 pb-3 border-t border-gray-200 px-4">
+                <div class="flex items-center justify-center space-x-4">
+                    <button class="text-gray-600 hover:text-primary">
+                        <i class="fas fa-search fa-lg"></i>
+                    </button>
+                    <button class="text-gray-600 hover:text-primary relative">
+                        <i class="fas fa-shopping-bag fa-lg"></i>
+                        <span class="cart-count absolute -top-2 -right-2 h-5 w-5 rounded-full flex items-center justify-center text-xs font-bold" id="mobile-cart-counter">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+     <!-- Hero Section -->
+    <div class="hero-section" id="home">
+        <div class="text-center px-4 max-w-4xl">
+            <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">Illuminate Your Space with <span class="text-primary">Gamya   Candles</span></h1>
+            <p class="text-xl md:text-2xl text-white/90 mb-10">Candles are happiness with a light and wonderful smell</p>
+            <a href="#shop" class="bg-primary hover:bg-[#C19A6B] text-white font-bold py-3 px-10 rounded-full text-lg transition-all duration-300 inline-flex items-center">
+                Explore Collection <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+    </div>
+
+
+     <!-- Features Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+                <div>
+                    <div class="feature-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Eco-Friendly</h3>
+                    <p class="text-gray-600">Made with 100% natural soy wax, cotton wicks, and phthalate-free fragrances</p>
+                </div>
+                <div>
+                    <div class="feature-icon">
+                        <i class="fas fa-hand-holding-heart"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Hand-poured</h3>
+                    <p class="text-gray-600">Each candle is carefully handcrafted in small batches for quality control</p>
+                </div>
+                <div>
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Long-lasting</h3>
+                    <p class="text-gray-600">50+ hours of burn time with proper care for extended enjoyment</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Featured Collection -->
+    <section class="py-16 bg-secondary" id="shop">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4 section-title">Signature Collection</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Discover our best-selling candles loved by customers worldwide</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Candle 1 -->
+                <div class="candle-card group">
+                    <div class="overflow-hidden relative">
+                        <img src="https://i.pinimg.com/736x/bf/52/7e/bf527e8250afc1e18ab196035ecc393e.jpg" alt="White soy candle in simple glass jar with minimalist bamboo lid and vanilla bean speckles visible in wax" class="w-full h-80 object-cover group-hover:scale-105 transition duration-500">
+                        <div class="absolute top-3 right-3 bg-primary text-white text-xs px-2 py-1 rounded-full">BESTSELLER</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl text-gray-900 mb-2">bubble candle</h3>
+                        <div class="flex items-center mb-3">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-gray-500 text-sm ml-2">(124)</span>
+                        </div>
+                        <div class="flex flex-wrap mb-4 gap-2">
+                            <span class="scent-label"><i class="fas fa-spa mr-1"></i> Sweet</span>
+                            <span class="scent-label"><i class="fas fa-mug-hot mr-1"></i> Gourmand</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Ethically sourced and made in limited batches ,our candles are ideal for every occasion.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-primary font-bold text-lg">₹200</span>
+                            <button class="add-to-cart px-4 py-2 rounded-full font-medium text-sm transition duration-300 inline-flex items-center" onclick="addToCart('Vanilla Bourbon', 38, 'https://placehold.co/600x750')">
+                                Add <i class="fas fa-plus ml-1 text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Candle 2 -->
+                <div class="candle-card group">
+                    <div class="overflow-hidden">
+                        <img src="https://i.pinimg.com/736x/3c/c1/78/3cc178411d763b6aaa6025d18431ea28.jpg" alt="Two black matte ceramic candles with geometric cutout patterns revealing golden wax within" class="w-full h-80 object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="p-6">
+                         <h3 class="font-bold text-xl text-gray-900 mb-2">Hue rose</h3>
+                        <div class="flex items-center mb-3">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="text-gray-500 text-sm ml-2">(89)</span>
+                        </div>
+                        <div class="flex flex-wrap mb-4 gap-2">
+                            <span class="scent-label"><i class="fas fa-tree mr-1"></i> Rosy</span>
+                            <span class="scent-label"><i class="fas fa-wine-bottle mr-1"></i> Vanilla</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4"> Hue rose blended with rose and warm amber creates a mysterious, sophisticated aroma.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-primary font-bold text-lg">₹150</span>
+                            <button class="add-to-cart px-4 py-2 rounded-full font-medium text-sm transition duration-300 inline-flex items-center" onclick="addToCart('Black Fig', 42, 'https://placehold.co/600x750')">
+                                Add <i class="fas fa-plus ml-1 text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Candle 3 -->
+                <div class="candle-card group">
+                    <div class="overflow-hidden relative">
+                        <img src="https://i.pinimg.com/736x/a9/9c/d2/a99cd29abc63c69e6713d63b82605574.jpg" alt="Three pastel colored candles in gradient hues of blue, pink and purple with dried flower petals embedded" class="w-full h-80 object-cover group-hover:scale-105 transition duration-500">
+                        <div class="absolute top-3 right-3 bg-primary text-white text-xs px-2 py-1 rounded-full">NEW</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl text-gray-900 mb-2">Baris candle</h3>
+                        <div class="flex items-center mb-3">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-gray-500 text-sm ml-2">(64)</span>
+                        </div>
+
+                        <div class="flex flex-wrap mb-4 gap-2">
+                            <span class="scent-label"><i class="fas fa-water mr-1"></i> Fresh</span>
+                            <span class="scent-label"><i class="fas fa-wind mr-1"></i> Airy</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">A beacon of hope and tranquility ,and dedicated to pursuit of peace with natural smell</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-primary font-bold text-lg">₹200</span>
+                            <button class="add-to-cart px-4 py-2 rounded-full font-medium text-sm transition duration-300 inline-flex items-center" onclick="addToCart('Sea Mist', 44, 'https://placehold.co/600x750')">
+                                Add <i class="fas fa-plus ml-1 text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Candle 4 -->
+                 <div class="candle-card group">
+                    <div class="overflow-hidden">
+                        <img src="https://i.pinimg.com/736x/e1/9b/9d/e19b9dfb2ce99f13f2a8879cc626f7b6.jpg" alt="Gold metallic luxury candle with embossed detailing in a classic apothecary style jar" class="w-full h-80 object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl text-gray-900 mb-2">Gamya's special</h3>
+                        <div class="flex items-center mb-3">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-gray-500 text-sm ml-2">(102)</span>
+                        </div>
+                        <div class="flex flex-wrap mb-4 gap-2">
+                            <span class="scent-label"><i class="fas fa-mountain mr-1"></i> Resinous</span>
+                            <span class="scent-label"><i class="fas fa-gem mr-1"></i> Luxe</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Rare candleand precious myrrh create this opulent, meditative fragrance experience.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-primary font-bold text-lg">₹200</span>
+                            <button class="add-to-cart px-4 py-2 rounded-full font-medium text-sm transition duration-300 inline-flex items-center" onclick="addToCart('Oud & Myrrh', 48, 'https://placehold.co/600x750')">
+                                Add <i class="fas fa-plus ml-1 text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+             <div class="text-center mt-12">
+                <a href="#collections" class="inline-flex items-center text-primary font-medium hover:text-primary-dark transition">
+                    View All Collections <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+    <!-- About Section -->
+    <section class="py-16 bg-white" id="about">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="md:flex items-center">
+                <div class="md:w-1/2 mb-8 md:mb-0 md:pr-10">
+                    <img src="https://placehold.co/800x1000" alt="Candle maker pouring melted soy wax into glass jars in a bright, clean workshop with organized ingredients" class="rounded-lg shadow-lg w-full">
+                </div>
+                <div class="md:w-1/2">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6 section-title">Our Story</h2>
+                    <p class="text-gray-600 mb-4">Founded in 2018, Gamya Candles began as a passion project in a small home studio. What started as a creative outlet quickly grew into a mission to create beautiful, sustainable candles that elevate everyday moments.</p>
+                    <p class="text-gray-600 mb-6">Each Gamya candle is hand-poured in our  workshop using only the finest ingredients. We source premium soy wax, lead-free cotton wicks, and carefully curated fragrance oils to ensure exceptional quality and performance.</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="font-bold mb-2 text-lg flex items-center">
+                                <i class="fas fa-seedling text-primary mr-2"></i> Sustainability
+                            </h3>
+                            <p class="text-gray-600 text-sm">Our reusable vessels and eco-conscious packaging minimize environmental impact.</p>
+                        </div>
+                        <div>
+                            <h3 class="font-bold mb-2 text-lg flex items-center">
+                                <i class="fas fa-heart text-primary mr-2"></i> Craftsmanship
+                            </h3>
+                            <p class="text-gray-600 text-sm">Every candle receives personal attention through every step of the process.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Collections Section -->
+    <section class="py-16 bg-secondary" id="collections">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4 section-title">Our Collections</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Explore our thoughtfully curated candle families designed for every mood and space</p>
+            </div>
+
+
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Collection 1 -->
+                <div class="relative overflow-hidden rounded-xl group h-96">
+                    <img src="https://placehold.co/800x1000" alt="Group of white and neutral colored candles in various minimalist vessels creating a clean, Scandinavian aesthetic" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-8">
+                        <div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Minimalist</h3>
+                            <p class="text-white/90 mb-4">Clean, understated designs with pure, singular fragrance notes</p>
+                            <a href="#" class="text-white hover:text-primary transition flex items-center">
+                                View Collection <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Collection 2 -->
+                <div class="relative overflow-hidden rounded-xl group h-96">
+                    <img src="https://placehold.co/800x1000" alt="Vibrantly colored candles with bold geometric patterns and Mediterranean-inspired hues arranged on a terracotta surface" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-8">
+                        <div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Bold & Spicy</h3>
+                            <p class="text-white/90 mb-4">Rich, complex fragrances with warm, adventurous character</p>
+                            <a href="#" class="text-white hover:text-primary transition flex items-center">
+                                View Collection <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Collection 3 -->
+                <div class="relative overflow-hidden rounded-xl group h-96">
+                    <img src="https://placehold.co/800x1000" alt="Delicate pastel candles with pressed flowers embedded in translucent wax and gold foil accents displayed on marble" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-8">
+                        <div>
+                            <h3 class="text-2xl font-bold text-white mb-2">Floral & Fresh</h3>
+                            <p class="text-white/90 mb-4">Bright botanical blends perfect for spring and summer days</p>
+                            <a href="#" class="text-white hover:text-primary transition flex items-center">
+                                View Collection <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+     <!-- Testimonials -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4 section-title">Customer Love</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">What our customers say about Gamya Candles</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card p-8">
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic mb-6">"The rose candle has become a staple in my home. The scent is perfectly balanced - not too sweet with just the right warmth. It burns evenly and lasts forever!"</p>
+                    <div class="flex items-center">
+                        <img src="https://placehold.co/50x50" alt="Portrait of Sarah J., a satisfied female customer in her 30s with blonde hair smiling" class="w-12 h-12 rounded-full object-cover mr-4">
+                        <div>
+                            <h4 class="font-bold">kirti</h4>
+                            <p class="text-gray-500 text-sm">Agra, Uttar Pradesh</p>
+                        </div>
+                    </div>
+                </div>
+
+
+                 <!-- Testimonial 2 -->
+                <div class="testimonial-card p-8">
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic mb-6">"I've tried many luxury candles, but Gamya's candle is truly exceptional. The vessel is so beautiful I reuse it after the candle is gone. Customer service is outstanding too."</p>
+                    <div class="flex items-center">
+                        <img src="https://placehold.co/50x50" alt="Portrait of Michael T., a satisfied male customer in his 40s with glasses and beard looking professional" class="w-12 h-12 rounded-full object-cover mr-4">
+                        <div>
+                            <h4 class="font-bold">shradha</h4>
+                            <p class="text-gray-500 text-sm">lucknow,up</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card p-8">
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic mb-6">"The  candles transport me are  Perfect for my small apartment - not overpowering but definitely noticeable. Already ordered backups!"</p>
+                    <div class="flex items-center">
+                        <img src="https://placehold.co/50x50" alt="Portrait of Aisha R., a young satisfied female customer with curly hair smiling brightly" class="w-12 h-12 rounded-full object-cover mr-4">
+                        <div>
+                            <h4 class="font-bold">Aisha </h4>
+                            <p class="text-gray-500 text-sm">Goa</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Newsletter -->
+    <section class="py-16 bg-neutral-100">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="bg-white p-8 md:p-12 rounded-xl shadow-sm">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Join Our Community</h2>
+                <p class="text-gray-600 mb-8 max-w-xl mx-auto">Subscribe for exclusive offers, new product launches, and candle care tips. Plus, get 10% off your first order.</p>
+                
+                <form class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
+                    <input type="email" placeholder="Your email address" class="flex-grow px-4 py-3 rounded-full border border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/50 outline-none transition">
+                    <button type="submit" class="bg-primary hover:bg-primary-dark text-white font-medium py-3 px-6 rounded-full transition whitespace-nowrap">
+                        Subscribe
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- Contact -->
+    <section class="py-16 bg-white" id="contact">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4 section-title">Get In Touch</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">We'd love to hear from you - questions, wholesale inquiries, or just to share your Gamya experience</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center p-6">
+                    <div class="feature-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Email Us</h3>
+                    <p class="text-gray-600">saumyag841@gmail.com</p>
+                    <p class="text-gray-500 text-sm">Typically responds within 24 hours</p>
+                </div>
+
+                <div class="text-center p-6">
+                    <div class="feature-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Call Us</h3>
+                    <p class="text-gray-600">9682267348</p>
+                    <p class="text-gray-500 text-sm">Mon-Fri, 9am-5pm</p>
+                </div>
+                <div class="text-center p-6">
+                    <div class="feature-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                     <h3 class="font-bold text-lg mb-2">Visit Us</h3>
+                    <p class="text-gray-600">128/1 b'block<br>Kidwai Nagar, Kanpur  208011</p>
+                    <p class="text-gray-500 text-sm">By appointment only</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                     <h3 class="text-2xl font-bold mb-4 flex items-center">
+                        <span class="text-primary">GAMYA</span>
+                        <span> CANDLES</span>
+                    </h3>
+                    <p class="text-gray-400 mb-4">Hand-poured luxury candles made with natural ingredients and designed to enhance your space.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-primary transition">
+                            <i class="fab fa-instagram fa-lg"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition">
+                            <i class="fab fa-facebook-f fa-lg"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition">
+                            <i class="fab fa-pinterest-p fa-lg"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Shop</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition">All Candles</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition">Collections</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition">Best Sellers</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition">New Arrivals</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition">Gift Cards</a></li>
+                    </ul>
+                </div>
+
+                 <div>
+                    <h4 class="font-bold text-lg mb-4">About</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition">Our Story</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition">Sustainability</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition">Candle Care</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition">FAQ</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition">Wholesale</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Legal</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition">Terms of Service</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition">Shipping Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition">Refund Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8">
+                <p class="text-gray-500 text-sm text-center">© 2023 Gamya Candles. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <!-- Shopping Cart Modal -->
+     <div class="hidden fixed inset-0 z-50 overflow-y-auto" id="cart-modal">
+        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+            
+            <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full" role="dialog" aria-modal="true" aria-labelledby="modal-headline">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-bold text-gray-900">Your Cart</h3>
+                        <button type="button" id="close-cart-btn" class="text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="cart-content">
+                        <div class="empty-cart-message text-center py-10">
+                            <div class="mb-4 text-gray-400">
+                                <i class="fas fa-shopping-bag fa-3x"></i>
+                            </div>
+                            <h4 class="font-medium text-gray-600">Your cart is empty</h4>
+                            <p class="text-gray-500 text-sm mt-2">Start shopping to add items to your cart</p>
+                            <button class="mt-4 bg-primary hover:bg-primary-dark text-white font-medium py-2 px-4 rounded-full text-sm transition">
+                                Continue Shopping
+                            </button>
+                        </div>
+                        
+                        <div class="cart-items hidden">
+                            <!-- Cart items will be dynamically added here -->
+                        </div>
+                    </div>
+                </div>
+                 <div class="cart-summary px53-4 py-3 bg-gray-50 flex justify-between items-center hidden">
+                    <div class="font-medium">
+                        <span class="text-gray-600">Total:</span>
+                        <span class="text-primary ml-2" id="cart-total">₹200</span>
+                    </div>
+                    <button class="bg-primary hover:bg-primary-dark text-white font-medium py-2 px-4 rounded-full text-sm transition">
+                        Checkout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Toast Notification -->
+    <div class="hidden fixed top-5 right-5 z-50 toast w-full max-w-xs bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden" id="toast">
+        <div class="flex items-center p-4">
+            <div class="text-green-500 bg-green-100 rounded-full p-2 mr-3">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <div>
+                <div class="font-medium" id="toast-title">Added to cart</div>
+                <div class="text-sm text-gray-500" id="toast-message">Item was added to your cart</div>
+            </div>
+            <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg p-1.5 hover:bg-gray-100 h-8 w-8" data-dismiss-target="#toast" aria-label="Close">
+                <span class="sr-only">Close</span>
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="h-1 w-full bg-green-500" id="toast-progress"></div>
+    </div>
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        // Cart functionality
+        const cartBtn = document.getElementById('cart-btn');
+        const closeCartBtn = document.getElementById('close-cart-btn');
+        const cartModal = document.getElementById('cart-modal');
+        const cartCounter = document.getElementById('cart-counter');
+        const mobileCartCounter = document.getElementById('mobile-cart-counter');
+        const cartItemsContainer = document.querySelector('.cart-items');
+        const cartSummary = document.querySelector('.cart-summary');
+        const emptyCartMessage = document.querySelector('.empty-cart-message');
+        const cartTotal = document.getElementById('cart-total');
+        const toast = document.getElementById('toast');
+        const toastTitle = document.getElementById('toast-title');
+        const toastMessage = document.getElementById('toast-message');
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        // Update cart counters
+        function updateCartCounters() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCounter.textContent = totalItems;
+            mobileCartCounter.textContent = totalItems;
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        // Toggle cart modal
+        cartBtn.addEventListener('click', () => {
+            cartModal.classList.remove('hidden');
+            renderCartItems();
+        });
+        closeCartBtn.addEventListener('click', () => {
+            cartModal.classList.add('hidden');
+        });
+        // Add to cart function
+        function addToCart(name, price, image) {
+            const existingItem = cart.find(item => item.name === name);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    name,
+                    price,
+                    image,
+                    quantity: 1
+                });
+            }
+            
+            updateCartCounters();
+            showToast('Item added', `${name} was added to your cart`);
+        }
+        // Render cart items
+        function renderCartItems() {
+            if (cart.length === 0) {
+                cartItemsContainer.classList.add('hidden');
+                cartSummary.classList.add('hidden');
+                emptyCartMessage.classList.remove('hidden');
+                cartTotal.textContent = '$0.00';
+                return;
+            }
+            
+            emptyCartMessage.classList.add('hidden');
+            cartItemsContainer.classList.remove('hidden');
+            cartSummary.classList.remove('hidden');
+            
+            cartItemsContainer.innerHTML = '';
+            
+            let total = 0;
+
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                const div = document.createElement('div');
+                div.className = 'flex items-center py-4 border-b border-gray-100';
+                div.innerHTML = `
+                    <div class="flex-shrink-0 h-16 w-16 overflow-hidden rounded-md">
+                        <img src="${item.image}" alt="${item.name}" class="h-full w-full object-contain">
+                    </div>
+                    <div class="ml-4 flex-1">
+                        <div class="flex justify-between">
+                            <h4 class="font-medium text-gray-900">${item.name}</h4>
+                            <p class="ml-4 font-medium">$${(item.price * item.quantity).toFixed(2)}</p>
+                        </div>
+                        <div class="mt-1 flex items-center justify-between">
+                            <p class="text-gray-500">$${item.price.toFixed(2)} each</p>
+                            <div class="flex items-center border rounded-lg overflow-hidden">
+                                <button class="px-3 py-1 text-gray-500 hover:bg-gray-100 quantity-decrease" data-name="${item.name}">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <span class="px-3 py-1 text-sm">${item.quantity}</span>
+                                <button class="px-3 py-1 text-gray-500 hover:bg-gray-100 quantity-increase" data-name="${item.name}">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                cartItemsContainer.appendChild(div);
+            });
+            
+            cartTotal.textContent = `$${total.toFixed(2)}`;
+            
+            // Add event listeners to quantity buttons
+            document.querySelectorAll('.quantity-increase').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const itemName = e.target.getAttribute('data-name');
+                    const item = cart.find(item => item.name === itemName);
+                    if (item) {
+                        item.quantity += 1;
+                        updateCartCounters();
+                        renderCartItems();
+                    }
+                });
+            });
+
+            document.querySelectorAll('.quantity-decrease').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const itemName = e.target.getAttribute('data-name');
+                    const item = cart.find(item => item.name === itemName);
+                    if (item) {
+                        if (item.quantity > 1) {
+                            item.quantity -= 1;
+                        } else {
+                            cart = cart.filter(i => i.name !== itemName);
+                        }
+                        updateCartCounters();
+                        renderCartItems();
+                     }
+                });
+            });
+        }
+        // Show toast notification
+        function showToast(title, message) {
+            toastTitle.textContent = title;
+            toastMessage.textContent = message;
+            toast.classList.remove('hidden');
+            
+            // Reset progress bar animation
+            const progress = document.getElementById('toast-progress');
+            progress.style.width = '100%';
+            progress.style.transition = 'width 3s linear';
+            setTimeout(() => {
+                progress.style.width = '0%';
+            }, 10);
+            
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+        // Initialize cart
+        updateCartCounters();
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
