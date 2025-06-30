@@ -1,8 +1,8 @@
-{Add commentMore actions
+{
     "rewrites": [
       {
         "source": "/(.*)",
-        "destination": "/gamya.html"
+        "destination": "/index.html"
       }
     ]
   }
